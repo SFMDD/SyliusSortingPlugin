@@ -16,10 +16,16 @@ final class SortingMenuBuilder
 
 		if ($sales !== null) {
 			$sales
-				->addChild('sorting', [
-					'route' => 'fmdd_sylius_admin_sorting_index',
+				->addChild('sorting_products', [
+					'route' => 'fmdd_sylius_admin_products_sorting_index',
 				])
 				->setName('fmdd.ui.sorting_plugin.product.menuTitle')
+				->setLabelAttribute('icon', 'sort');
+			$sales
+				->addChild('sorting_taxons', [
+					'route' => 'fmdd_sylius_admin_taxons_sorting_index',
+				])
+				->setName('fmdd.ui.sorting_plugin.taxon.menuTitle')
 				->setLabelAttribute('icon', 'sort');
 		}
 	}
