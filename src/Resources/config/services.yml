@@ -10,12 +10,23 @@ services:
               event: sylius.menu.admin.main
               method: buildMenu
 
-    FMDD\SyliusSortingPlugin\Controller\SortingController:
+    FMDD\SyliusSortingPlugin\Controller\ProductSortingController:
         public: true
         arguments:
             $twig: '@twig'
             $taxonRepository: '@sylius.repository.taxon'
             $productTaxonRepository: '@sylius.repository.product_taxon'
+            $entityManager: '@doctrine.orm.entity_manager'
+            $eventDispatcher: '@event_dispatcher'
+            $router: '@router'
+            $translator: '@translator'
+            $flashBag: '@session.flash_bag'
+
+    FMDD\SyliusSortingPlugin\Controller\TaxonSortingController:
+        public: true
+        arguments:
+            $twig: '@twig'
+            $taxonRepository: '@sylius.repository.taxon'
             $entityManager: '@doctrine.orm.entity_manager'
             $eventDispatcher: '@event_dispatcher'
             $router: '@router'
