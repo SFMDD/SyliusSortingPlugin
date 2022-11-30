@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace MangoSylius\SortingPlugin;
+namespace FMDD\SyliusSortingPlugin;
 
 use Sylius\Bundle\CoreBundle\Application\SyliusPluginTrait;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class MangoSyliusSortingPlugin extends Bundle
+class FMDDSyliusSortingPlugin extends Bundle
 {
 	use SyliusPluginTrait;
 }

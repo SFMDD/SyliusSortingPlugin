@@ -4,16 +4,16 @@ services:
         autoconfigure: false
         public: false
 
-    MangoSylius\SortingPlugin\Menu\SortingMenuBuilder:
+    FMDD\SyliusSortingPlugin\Menu\SortingMenuBuilder:
         tags:
             - name: kernel.event_listener
               event: sylius.menu.admin.main
               method: buildMenu
 
-    MangoSylius\SortingPlugin\Controller\SortingController:
+    FMDD\SyliusSortingPlugin\Controller\SortingController:
         public: true
         arguments:
-            $templatingEngine: '@templating'
+            $twig: '@twig'
             $taxonRepository: '@sylius.repository.taxon'
             $productTaxonRepository: '@sylius.repository.product_taxon'
             $entityManager: '@doctrine.orm.entity_manager'

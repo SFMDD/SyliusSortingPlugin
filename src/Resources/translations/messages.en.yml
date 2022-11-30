@@ -1,4 +1,4 @@
-mango-sylius:
+fmdd:
     ui:
         sortingPlugin:
             header: Sorting products

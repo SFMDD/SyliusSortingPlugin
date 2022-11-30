@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\MangoSylius\SortingPlugin\Behat\Context\Ui\Admin;
+namespace Tests\FMDD\SyliusSortingPlugin\Behat\Context\Ui\Admin;
 
 use Behat\Behat\Context\Context;
 use Sylius\Behat\NotificationType;
 use Sylius\Behat\Service\NotificationCheckerInterface;
 use Sylius\Component\Taxonomy\Repository\TaxonRepositoryInterface;
-use Tests\MangoSylius\SortingPlugin\Behat\Pages\Admin\Sorting\SortingPageInterface;
+use Tests\FMDD\SyliusSortingPlugin\Behat\Pages\Admin\Sorting\SortingPageInterface;
 
 final class ManagingSortingContext implements Context
 {

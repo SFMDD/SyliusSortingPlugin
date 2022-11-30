@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\MangoSylius\SortingPlugin\Behat\Pages\Admin\Sorting;
+namespace Tests\FMDD\SyliusSortingPlugin\Behat\Pages\Admin\Sorting;
 
 use FriendsOfBehat\PageObjectExtension\Page\SymfonyPageInterface;
 

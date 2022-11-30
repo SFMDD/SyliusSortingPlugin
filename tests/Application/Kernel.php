@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\MangoSylius\SortingPlugin\Application;
+namespace Tests\FMDD\SyliusSortingPlugin\Application;
 
 use PSS\SymfonyMockerContainer\DependencyInjection\MockerContainer;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;

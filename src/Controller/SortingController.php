@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MangoSylius\SortingPlugin\Controller;
+namespace FMDD\SyliusSortingPlugin\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\ProductTaxonInterface;
@@ -16,13 +16,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Twig\Environment;
 
 class SortingController
 {
-	/** @var EngineInterface */
-	private $templatingEngine;
+	/** @var Environment */
+	private $twig;
 	/**
 	 * @var TaxonRepositoryInterface
 	 */
@@ -53,7 +53,7 @@ class SortingController
 	private $translator;
 
 	public function __construct(
-		EngineInterface $templatingEngine,
+		Environment $twig,
 		TaxonRepositoryInterface $taxonRepository,
 		ProductTaxonRepositoryInterface $productTaxonRepository,
 		EntityManagerInterface $entityManager,
@@ -62,7 +62,7 @@ class SortingController
 		FlashBagInterface $flashBag,
 		TranslatorInterface $translator
 	) {
-		$this->templatingEngine = $templatingEngine;
+		$this->twig = $twig;
 		$this->taxonRepository = $taxonRepository;
 		$this->productTaxonRepository = $productTaxonRepository;
 		$this->entityManager = $entityManager;
@@ -75,8 +75,8 @@ class SortingController
 	public function index(): Response
 	{
 		return new Response(
-			$this->templatingEngine->render(
-				'@MangoSyliusSortingPlugin/index.html.twig'
+			$this->twig->render(
+				'@FMDDSyliusSortingPlugin/index.html.twig'
 			)
 		);
 	}
@@ -94,8 +94,8 @@ class SortingController
 		);
 
 		return new Response(
-			$this->templatingEngine->render(
-				'@MangoSyliusSortingPlugin/index.html.twig',
+			$this->twig->render(
+				'@FMDDSyliusSortingPlugin/index.html.twig',
 				[
 					'taxon' => $taxon,
 					'productsTaxons' => $productsTaxons,
@@ -126,19 +126,19 @@ class SortingController
 		$this->entityManager->flush();
 
 		if ($taxon !== null) {
-			$message = $this->translator->trans('mango-sylius.ui.sortingPlugin.successMessage');
+			$message = $this->translator->trans('fmdd.ui.sortingPlugin.successMessage');
 			$this->flashBag->add('success', $message);
 
-			$redirectUrl = $this->router->generate('mango_sylius_admin_sorting_products', ['taxonId' => $taxon->getId()]);
+			$redirectUrl = $this->router->generate('fmdd_sylius_admin_sorting_products', ['taxonId' => $taxon->getId()]);
 
 			// Eg. for update product position in elasticsearch
 			$event = new GenericEvent($taxon);
-			$this->eventDispatcher->dispatch('mango-sylius-sorting-products-after-persist', $event);
+			$this->eventDispatcher->dispatch('fmdd-sylius-sorting-products-after-persist', $event);
 		} else {
-			$message = $this->translator->trans('mango-sylius.ui.sortingPlugin.noProductMessage');
+			$message = $this->translator->trans('fmdd.ui.sortingPlugin.noProductMessage');
 			$this->flashBag->add('error', $message);
 
-			$redirectUrl = $this->router->generate('mango_sylius_admin_sorting_index');
+			$redirectUrl = $this->router->generate('fmdd_sylius_admin_sorting_index');
 		}
 
 		return new RedirectResponse($redirectUrl);

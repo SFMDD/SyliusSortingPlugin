@@ -1,5 +1,5 @@
 {
-	"name": "sfmdd/sylius-sorting-plugin",
+	"name": "fmdd/sylius-sorting-plugin",
 	"type": "sylius-plugin",
 	"description": "Sorting plugin for Sylius",
 	"license": "MIT",
@@ -35,8 +35,8 @@
 	"prefer-stable": true,
 	"autoload": {
 		"psr-4": {
-			"MangoSylius\\SortingPlugin\\": "src/",
-			"Tests\\MangoSylius\\SortingPlugin\\": "tests/"
+			"FMDD\\SyliusSortingPlugin\\": "src/",
+			"Tests\\FMDD\\SyliusSortingPlugin\\": "tests/"
 		}
 	},
 	"autoload-dev": {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace MangoSylius\SortingPlugin\Menu;
+namespace FMDD\SyliusSortingPlugin\Menu;
 
 use Sylius\Bundle\UiBundle\Menu\Event\MenuBuilderEvent;
 
@@ -17,9 +17,9 @@ final class SortingMenuBuilder
 		if ($sales !== null) {
 			$sales
 				->addChild('sorting', [
-					'route' => 'mango_sylius_admin_sorting_index',
+					'route' => 'fmdd_sylius_admin_sorting_index',
 				])
-				->setName('mango-sylius.ui.sortingPlugin.menuTitle')
+				->setName('fmdd.ui.sortingPlugin.menuTitle')
 				->setLabelAttribute('icon', 'sort');
 		}
 	}
