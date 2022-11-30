@@ -19,7 +19,7 @@ final class SortingMenuBuilder
 				->addChild('sorting', [
 					'route' => 'fmdd_sylius_admin_sorting_index',
 				])
-				->setName('fmdd.ui.sortingPlugin.menuTitle')
+				->setName('fmdd.ui.sorting_plugin.product.menuTitle')
 				->setLabelAttribute('icon', 'sort');
 		}
 	}

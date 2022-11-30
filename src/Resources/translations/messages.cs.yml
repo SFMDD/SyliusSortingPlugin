@@ -1,11 +1,12 @@
 fmdd:
     ui:
-        sortingPlugin:
-            header: Řazení produktů
-            menuTitle: Řazení produktů
-            subHeader: Vyberte kategorii a produkty seřaďte přetažením karet. Pro uložení nového pořadí klikněte na Uložit pozice.
-            chooseTaxon: Vyberte kategorii
-            noProducts: Žádné produkty v kategorii
-            successMessage: Hotovo, produkty byly seřazeny.
-            noProductMessage: Žádné produkty k seřazení.
-            toggleTaxons: Rozbalit / sbalit kategorie
+        sorting_plugin:
+            product:
+                header: Řazení produktů
+                menuTitle: Řazení produktů
+                subHeader: Vyberte kategorii a produkty seřaďte přetažením karet. Pro uložení nového pořadí klikněte na Uložit pozice.
+                chooseTaxon: Vyberte kategorii
+                noProducts: Žádné produkty v kategorii
+                successMessage: Hotovo, produkty byly seřazeny.
+                noProductMessage: Žádné produkty k seřazení.
+                toggleTaxons: Rozbalit / sbalit kategorie

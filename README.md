@@ -33,10 +33,10 @@ FM2D is a Web Agency publisher of Sylius plugins and open source actor. Since 20
 
 ---
 
-* Sort products in taxons by simple drag and drop
-	* Well-arranged overview of all products in the taxon
-	* Disabled products greyed out
-	* Direct links into product details
+* Sort products or taxons inside a taxon by simple drag and drop
+	* Well-arranged overview of all taxons/products in the taxon
+	* Disabled taxons/products greyed out
+	* Direct links into taxon/product details
 	* Optionally hidden taxon tree to get even more space
 
 # Installation

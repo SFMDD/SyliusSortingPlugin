@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace FMDD\SyliusSortingPlugin\Controller;
 
+use App\Command\CronTab\EnableTaxonIfProductsCommand;
 use Doctrine\ORM\EntityManagerInterface;
 use Sylius\Component\Core\Model\ProductTaxonInterface;
 use Sylius\Component\Core\Repository\ProductTaxonRepositoryInterface;
@@ -19,43 +20,19 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Twig\Environment;
 
-class SortingController
+class TaxonSortingController
 {
-	/** @var Environment */
-	private $twig;
-	/**
-	 * @var TaxonRepositoryInterface
-	 */
-	private $taxonRepository;
-	/**
-	 * @var ProductTaxonRepositoryInterface
-	 */
-	private $productTaxonRepository;
-	/**
-	 * @var EntityManagerInterface
-	 */
-	private $entityManager;
-	/**
-	 * @var EventDispatcherInterface
-	 */
-	private $eventDispatcher;
-	/**
-	 * @var RouterInterface
-	 */
-	private $router;
-	/**
-	 * @var FlashBagInterface
-	 */
-	private $flashBag;
-	/**
-	 * @var TranslatorInterface
-	 */
-	private $translator;
+	private Environment $twig;
+	private TaxonRepositoryInterface $taxonRepository;
+	private EntityManagerInterface $entityManager;
+	private EventDispatcherInterface $eventDispatcher;
+	private RouterInterface $router;
+	private FlashBagInterface $flashBag;
+	private TranslatorInterface $translator;
 
 	public function __construct(
 		Environment $twig,
 		TaxonRepositoryInterface $taxonRepository,
-		ProductTaxonRepositoryInterface $productTaxonRepository,
 		EntityManagerInterface $entityManager,
 		EventDispatcherInterface $eventDispatcher,
 		RouterInterface $router,
@@ -64,7 +41,6 @@ class SortingController
 	) {
 		$this->twig = $twig;
 		$this->taxonRepository = $taxonRepository;
-		$this->productTaxonRepository = $productTaxonRepository;
 		$this->entityManager = $entityManager;
 		$this->eventDispatcher = $eventDispatcher;
 		$this->router = $router;
@@ -76,29 +52,26 @@ class SortingController
 	{
 		return new Response(
 			$this->twig->render(
-				'@FMDDSyliusSortingPlugin/index.html.twig'
+				'@FMDDSyliusSortingPlugin/Taxon/index.html.twig'
 			)
 		);
 	}
 
-	public function products(int $taxonId): Response
+	public function taxons(int $taxonId): Response
 	{
 		$taxon = $this->taxonRepository->find($taxonId);
 		if ($taxon === null) {
 			throw new NotFoundHttpException();
 		}
 
-		$productsTaxons = $this->productTaxonRepository->findBy(
-			['taxon' => $taxon],
-			['position' => 'asc']
-		);
+		$taxons = $this->taxonRepository->findBy(['parent' => $taxon], ['position' => 'asc']);
 
 		return new Response(
 			$this->twig->render(
-				'@FMDDSyliusSortingPlugin/index.html.twig',
+				'@FMDDSyliusSortingPlugin/Taxon/index.html.twig',
 				[
 					'taxon' => $taxon,
-					'productsTaxons' => $productsTaxons,
+					'taxons' => $taxons,
 				]
 			)
 		);
@@ -111,34 +84,34 @@ class SortingController
 
 		if ($request->request->get('id') !== null) {
 			foreach ($request->request->get('id') as $id) {
-				$productTaxon = $this->productTaxonRepository->find($id);
-				assert($productTaxon instanceof ProductTaxonInterface);
-				$productTaxon->setPosition($i);
+				$temp = $this->taxonRepository->find($id);
+				if($temp !== null) {
+					$temp->setPosition($i);
+					$this->entityManager->persist($temp);
+					$this->entityManager->flush();
 
-				if ($taxon === null) {
-					$taxon = $productTaxon->getTaxon();
+					if ($taxon === null) {
+						$taxon = $temp;
+					}
+					++$i;
 				}
-
-				++$i;
 			}
 		}
 
-		$this->entityManager->flush();
-
 		if ($taxon !== null) {
-			$message = $this->translator->trans('fmdd.ui.sortingPlugin.successMessage');
+			$message = $this->translator->trans('fmdd.ui.sorting_plugin.taxon.successMessage');
 			$this->flashBag->add('success', $message);
 
-			$redirectUrl = $this->router->generate('fmdd_sylius_admin_sorting_products', ['taxonId' => $taxon->getId()]);
+			$redirectUrl = $this->router->generate('fmdd_sylius_admin_taxons_sorting', ['taxonId' => $taxon->getParent()->getId()]);
 
 			// Eg. for update product position in elasticsearch
 			$event = new GenericEvent($taxon);
 			$this->eventDispatcher->dispatch('fmdd-sylius-sorting-products-after-persist', $event);
 		} else {
-			$message = $this->translator->trans('fmdd.ui.sortingPlugin.noProductMessage');
+			$message = $this->translator->trans('fmdd.ui.sorting_plugin.taxon.noTaxonMessage');
 			$this->flashBag->add('error', $message);
 
-			$redirectUrl = $this->router->generate('fmdd_sylius_admin_sorting_index');
+			$redirectUrl = $this->router->generate('fmdd_sylius_admin_taxons_sorting_index');
 		}
 
 		return new RedirectResponse($redirectUrl);

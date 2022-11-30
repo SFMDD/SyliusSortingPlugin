@@ -1,15 +1,30 @@
-fmdd_sylius_admin_sorting_index:
-    path: /sorting
+fmdd_sylius_admin_products_sorting_index:
+    path: /sorting/products
     defaults:
-        _controller: FMDD\SyliusSortingPlugin\Controller\SortingController:index
+        _controller: FMDD\SyliusSortingPlugin\Controller\ProductSortingController:index
 
-fmdd_sylius_admin_sorting_products_save:
-    path: /sorting/save
+fmdd_sylius_admin_products_sorting_save:
+    path: /sorting/products/save
     defaults:
-        _controller: FMDD\SyliusSortingPlugin\Controller\SortingController:savePositions
+        _controller: FMDD\SyliusSortingPlugin\Controller\ProductSortingController:savePositions
 
-fmdd_sylius_admin_sorting_products:
-    path: /sorting/taxon/{taxonId}
+fmdd_sylius_admin_products_sorting:
+    path: /sorting/products/taxon/{taxonId}
     defaults:
-        _controller: FMDD\SyliusSortingPlugin\Controller\SortingController:products
+        _controller: FMDD\SyliusSortingPlugin\Controller\ProductSortingController:products
 
+
+fmdd_sylius_admin_taxons_sorting_index:
+    path: /sorting/taxons
+    defaults:
+        _controller: FMDD\SyliusSortingPlugin\Controller\TaxonSortingController:index
+
+fmdd_sylius_admin_taxons_sorting_save:
+    path: /sorting/taxons/save
+    defaults:
+        _controller: FMDD\SyliusSortingPlugin\Controller\TaxonSortingController:savePositions
+
+fmdd_sylius_admin_taxons_sorting:
+    path: /sorting/taxons/taxon/{taxonId}
+    defaults:
+        _controller: FMDD\SyliusSortingPlugin\Controller\TaxonSortingController:taxons

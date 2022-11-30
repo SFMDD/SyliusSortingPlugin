@@ -5,31 +5,31 @@
 {% import '@SyliusAdmin/Macro/breadcrumb.html.twig' as breadcrumb %}
 {% import '@SyliusUi/Macro/messages.html.twig' as messages %}
 
-{% block title %}{{ 'fmdd.ui.sortingPlugin.header'|trans }}{% endblock %}
+{% block title %}{{ 'fmdd.ui.sorting_plugin.product.header'|trans }}{% endblock %}
 
 {% block content %}
 
-	<form method="post" action="{{ path('fmdd_sylius_admin_sorting_products_save') }}">
+	<form method="post" action="{{ path('fmdd_sylius_admin_products_sorting_save') }}">
 		<div class="ui stackable two column grid">
 			<div class="column">
 				<h1 class="ui header">
 					<i class="circular sort icon"></i>
 					<div class="content">
-						{{ 'fmdd.ui.sortingPlugin.header'|trans }}
-						<div class="sub header">{{ 'fmdd.ui.sortingPlugin.subHeader'|trans }}</div>
+						{{ 'fmdd.ui.sorting_plugin.product.header'|trans }}
+						<div class="sub header">{{ 'fmdd.ui.sorting_plugin.product.subHeader'|trans }}</div>
 					</div>
 				</h1>
 
 				{% if taxon is defined %}
 					{% set breadcrumbs = [
 						{ label: 'sylius.ui.administration'|trans, url: path('sylius_admin_dashboard') },
-						{ label: 'fmdd.ui.sortingPlugin.header'|trans, url: path('fmdd_sylius_admin_sorting_index') },
+						{ label: 'fmdd.ui.sorting_plugin.product.header'|trans, url: path('fmdd_sylius_admin_products_sorting_index') },
 						{ label: taxon.name },
 					] %}
 				{% else %}
 					{% set breadcrumbs = [
 						{ label: 'sylius.ui.administration'|trans, url: path('sylius_admin_dashboard') },
-						{ label: 'fmdd.ui.sortingPlugin.header'|trans },
+						{ label: 'fmdd.ui.sorting_plugin.product.header'|trans },
 					] %}
 				{% endif %}
 
@@ -41,7 +41,7 @@
 					<label for="sort-tree-toggler"
 						   class="ui labeled icon button">
 						<i class="icon list"></i>
-						{{ 'fmdd.ui.sortingPlugin.toggleTaxons'|trans }}
+						{{ 'fmdd.ui.sorting_plugin.product.toggleTaxons'|trans }}
 					</label>
 					{% set disableButton = taxon is not defined or (taxon is defined and productsTaxons|length == 0) %}
 					<button type="submit"
@@ -57,7 +57,7 @@
 		<div class="sortPage">
 			<input type="checkbox" checked="checked" class="sortPage-toggler" id="sort-tree-toggler">
 			<div class="sortPage-tree">
-				{{ render(path('sylius_admin_partial_taxon_tree', {'template': '@FMDDSyliusSortingPlugin/_taxonTree.html.twig'})) }}
+				{{ render(path('sylius_admin_partial_taxon_tree', {'template': '@FMDDSyliusSortingPlugin/Admin/Product/_taxonTree.html.twig'})) }}
 			</div>
 			<div class="sylius-product-index sortPage-products">
 				{% if taxon is defined %}
@@ -67,7 +67,7 @@
 								{% set product = productTaxon.product %}
 								<div class="sortableItem card">
 									<div class="content" style="{% if not product.enabled %}opacity: 0.5{% endif %}">
-										{{ include('@FMDDSyliusSortingPlugin/_mainImage.html.twig') }}
+										{{ include('@FMDDSyliusSortingPlugin/Admin/Product/_mainImage.html.twig') }}
 										<div class="header">
 											{{ product.name }}
 										</div>
@@ -88,10 +88,10 @@
 							{% endfor %}
 						</div>
 					{% else %}
-						{{ messages.info('fmdd.ui.sortingPlugin.noProducts') }}
+						{{ messages.info('fmdd.ui.sorting_plugin.product.noProducts') }}
 					{% endif %}
 				{% else %}
-					{{ messages.info('fmdd.ui.sortingPlugin.chooseTaxon') }}
+					{{ messages.info('fmdd.ui.sorting_plugin.product.chooseTaxon') }}
 				{% endif %}
 			</div>
 		</div>
