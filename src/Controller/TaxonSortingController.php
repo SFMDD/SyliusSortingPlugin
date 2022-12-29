@@ -52,7 +52,7 @@ class TaxonSortingController
 	{
 		return new Response(
 			$this->twig->render(
-				'@FMDDSyliusSortingPlugin/Taxon/index.html.twig'
+				'@FMDDSyliusSortingPlugin/Admin/Taxon/index.html.twig'
 			)
 		);
 	}
@@ -68,7 +68,7 @@ class TaxonSortingController
 
 		return new Response(
 			$this->twig->render(
-				'@FMDDSyliusSortingPlugin/Taxon/index.html.twig',
+				'@FMDDSyliusSortingPlugin/Admin/Taxon/index.html.twig',
 				[
 					'taxon' => $taxon,
 					'taxons' => $taxons,
