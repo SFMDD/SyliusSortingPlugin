@@ -133,7 +133,7 @@ class ProductSortingController
 
 			// Eg. for update product position in elasticsearch
 			$event = new GenericEvent($taxon);
-			$this->eventDispatcher->dispatch('fmdd-sylius-sorting-products-after-persist', $event);
+			$this->eventDispatcher->dispatch($event, 'fmdd-sylius-sorting-products-after-persist');
 		} else {
 			$message = $this->translator->trans('fmdd.ui.sorting_plugin.product.noProductMessage');
 			$this->flashBag->add('error', $message);
